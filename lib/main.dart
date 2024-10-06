@@ -26,7 +26,7 @@ class _CalculatorHomeState extends State<CalculatorHome> {
 
   void buttonPressed(String value) {
     setState(() {
-      if (value == '+' || value == '-') {
+      if (value == '+' || value == '-' || value == '*' || value == '/') {
         num1 = double.parse(displayText);
         operator = value;
         displayText = '';
@@ -36,6 +36,14 @@ class _CalculatorHomeState extends State<CalculatorHome> {
           displayText = (num1 + num2).toString();
         } else if (operator == '-') {
           displayText = (num1 - num2).toString();
+        } else if (operator == '*') {
+          displayText = (num1 * num2).toString();
+        } else if (operator == '/') {
+          if (num2 != 0) {
+            displayText = (num1 / num2).toString();
+          } else {
+            displayText = 'Error'; // Handle division by zero
+          }
         }
       } else {
         displayText += value; // Concatenate numbers
@@ -61,7 +69,7 @@ class _CalculatorHomeState extends State<CalculatorHome> {
               ),
             ),
           ),
-          // Number Buttons
+          // Number Buttons and Operators
           Row(
             children: [
               buildButton("1"),
@@ -83,12 +91,14 @@ class _CalculatorHomeState extends State<CalculatorHome> {
               buildButton("7"),
               buildButton("8"),
               buildButton("9"),
-              buildButton("="),
+              buildButton("*"),
             ],
           ),
           Row(
             children: [
               buildButton("0"),
+              buildButton("/"),
+              buildButton("="),
             ],
           ),
         ],

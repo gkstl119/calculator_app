@@ -20,6 +20,7 @@ class CalculatorHome extends StatefulWidget {
 
 class _CalculatorHomeState extends State<CalculatorHome> {
   String displayText = ''; // To store input and result
+  String history = ''; // To store calculation history
   double num1 = 0;
   double num2 = 0;
   String operator = '';
@@ -27,14 +28,16 @@ class _CalculatorHomeState extends State<CalculatorHome> {
   void buttonPressed(String value) {
     setState(() {
       if (value == 'C') {
-        // Clear the display and reset everything
+        // Clear the display, reset everything
         displayText = '';
+        history = '';
         num1 = 0;
         num2 = 0;
         operator = '';
       } else if (value == '+' || value == '-' || value == '*' || value == '/') {
         num1 = double.parse(displayText);
         operator = value;
+        history = '$num1 $operator'; // Display the first operand and operator
         displayText = '';
       } else if (value == '=') {
         num2 = double.parse(displayText);
@@ -51,6 +54,8 @@ class _CalculatorHomeState extends State<CalculatorHome> {
             displayText = 'Error'; // Handle division by zero
           }
         }
+        history =
+            '$num1 $operator $num2 = $displayText'; // Update history after result
       } else {
         displayText += value; // Concatenate numbers
       }
@@ -64,7 +69,16 @@ class _CalculatorHomeState extends State<CalculatorHome> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          // Display Area
+          // History Area (to show first operand and previous calculations)
+          Container(
+            alignment: Alignment.bottomRight,
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text(
+              history,
+              style: TextStyle(fontSize: 24, color: Colors.grey),
+            ),
+          ),
+          // Display Area (for current input and result)
           Expanded(
             child: Container(
               alignment: Alignment.bottomRight,

@@ -26,7 +26,13 @@ class _CalculatorHomeState extends State<CalculatorHome> {
 
   void buttonPressed(String value) {
     setState(() {
-      if (value == '+' || value == '-' || value == '*' || value == '/') {
+      if (value == 'C') {
+        // Clear the display and reset everything
+        displayText = '';
+        num1 = 0;
+        num2 = 0;
+        operator = '';
+      } else if (value == '+' || value == '-' || value == '*' || value == '/') {
         num1 = double.parse(displayText);
         operator = value;
         displayText = '';
@@ -99,6 +105,11 @@ class _CalculatorHomeState extends State<CalculatorHome> {
               buildButton("0"),
               buildButton("/"),
               buildButton("="),
+            ],
+          ),
+          Row(
+            children: [
+              buildButton("C"), // Clear button
             ],
           ),
         ],
